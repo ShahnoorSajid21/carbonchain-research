@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockchain Carbon Credit Fractionalization | Muhammad Shahnoor Sajid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* DESIGN TOKENS SHARP AND HIGH CONTRAST */
+:root {
+  --white:     #ffffff;
+  --off:       #f9f8f6;
+  --off2:      #f0ede6;
+  --border:    #dcd7ce;
+  --border2:   #ccc8c0;
+  --ink:       #111110;
+  --ink2:      #2c2a26; 
+  --ink3:      #5c5750;
+  --ink4:      #8a857e;
+
+  --green:     #1f573e;
+  --green2:    #35825f;
+  --green3:    #74c69d;
+  --green-bg:  #f0f7f3;
+  --green-mid: #d8ede3;
+
+  --amber:     #b5621e;
+  --amber-bg:  #fdf4ec;
+
+  --sans:  'Outfit', sans-serif;
+  --serif: 'Lora', serif;
+  --mono:  'JetBrains Mono', monospace;
+
+  --radius: 8px;
+  
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  --section-pad: 5.5rem 5rem;
+
+  font-size: 18px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--white);
+  color: var(--ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-size: 1rem; 
+}
+
+/* SVG ICON SYSTEM */
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--off);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 1.5rem;
+}
+.icon-badge .icon {
+  width: 20px;
+  height: 20px;
+}
+.icon-badge .icon svg {
+  stroke: var(--ink3);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* NAVIGATION */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 64px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 3rem;
+  gap: 2rem;
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  flex: 1;
+}
+.nav-links a {
+  display: block;
+  padding: 0 1rem;
+  line-height: 64px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ink3);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--green); font-weight: 600; }
+.nav-meta {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink4);
+  flex-shrink: 0;
+}
+
+/* HERO */
+#home {
+  padding-top: 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+}
+.hero-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-left {
+  padding: 6rem 4rem 6rem 5rem;
+  border-right: 1px solid var(--border);
+}
+.hero-right {
+  padding: 5rem 3rem;
+  background: var(--off);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem; 
+}
+.kicker-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green2);
+  flex-shrink: 0;
+}
+.kicker-text {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green2);
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5vw, 4.2rem); 
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.25rem; 
+}
+h1 em { font-style: italic; color: var(--green); }
+
+.hero-lead {
+  font-size: 1.15rem; 
+  font-weight: 400; 
+  color: var(--ink2);
+  line-height: 1.65; 
+  max-width: 1000px;
+  margin-bottom: 2rem; 
+}
+
+.author-block {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.author-name {
+  font-family: var(--serif);
+  font-size: 1.1rem; 
+  font-weight: 600;
+  color: var(--ink);
+}
+.author-detail {
+  font-size: 0.9rem; 
+  color: var(--ink3);
+  line-height: 1.4;
+}
+.author-email {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--green2);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+/* HERO RIGHT PANEL */
+.hero-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem; 
+  box-shadow: var(--shadow);
+}
+.hc-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 0.6rem; 
+}
+.hc-val {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 0.6rem; 
+}
+.hc-desc {
+  font-size: 0.9rem; 
+  color: var(--ink3);
+  line-height: 1.65;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid var(--green-mid);
+}
+
+/* STATS STRIP */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+}
+.stat-item {
+  padding: 2.5rem 3rem;
+  border-right: 1px solid var(--border);
+  background: var(--off);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 2.6rem; 
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+.stat-num span { color: var(--green2); }
+.stat-txt {
+  font-size: 0.9rem; 
+  color: var(--ink3);
+  line-height: 1.6;
+}
+
+/* SECTION SCAFFOLDING */
+.page-section {
+  padding: var(--section-pad);
+  border-top: 1px solid var(--border);
+}
+.page-section.tinted { background: var(--off); }
+
+.section-header {
+  max-width: 1200px;
+  margin-bottom: 2rem; 
+}
+.sec-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green2);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.sec-num::after {
+  content: '';
+  display: inline-block;
+  width: 40px; height: 1px;
+  background: var(--green3);
+}
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem); 
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 0.75rem; 
+}
+h2 em { font-style: italic; color: var(--green); }
+.sec-intro {
+  font-size: 1.1rem; 
+  font-weight: 400; 
+  color: var(--ink2);
+  line-height: 1.7; 
+  max-width: 1000px;
+}
+
+/* CONTENT EXPLAINER PROSE */
+.explainer {
+  max-width: 1200px; 
+  margin-bottom: 2rem; 
+}
+.explainer p {
+  font-size: 1.05rem; 
+  color: var(--ink2);
+  line-height: 1.75; 
+  margin-bottom: 1rem; 
+}
+.explainer p:last-child { margin-bottom: 0; }
+.explainer strong { color: var(--ink); font-weight: 600; }
+
+.pull-quote {
+  max-width: 1200px; 
+  border-left: 4px solid var(--green2);
+  padding: 1.5rem 2.5rem;
+  margin-top: 2.5rem; 
+  background: var(--green-bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.pull-quote p {
+  font-family: var(--serif);
+  font-size: 1.25rem; 
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.65; 
+  margin: 0;
+}
+.pull-quote strong { font-style: normal; color: var(--green); }
+
+/* CARDS BARRIERS RESULTS FINDINGS */
+.barrier-grid, .findings-grid, .future-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 0;
+  margin-top: 2.5rem;
+}
+.contracts-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-top: 3rem; 
+}
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 2.5rem; 
+  margin-top: 2.5rem;
+}
+
+/* UNIFIED CARD STYLING FOR SHARPNESS */
+.card-sharp {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.25rem;
+  box-shadow: var(--shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.tinted .card-sharp { background: var(--white); }
+.card-sharp:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  border-color: var(--border2);
+}
+
+/* BARRIER SPECIFIC */
+.bc-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--ink4);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  display: block;
+}
+.bc-title {
+  font-size: 1.05rem; 
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.bc-body {
+  font-size: 0.95rem; 
+  color: var(--ink2);
+  line-height: 1.65;
+  flex: 1;
+}
+.bc-foot {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.bc-stat {
+  font-family: var(--mono);
+  font-size: 1.4rem; 
+  font-weight: 600;
+  color: var(--amber);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+.bc-stat-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--ink4);
+  display: block;
+  line-height: 1.4;
+}
+
+/* RESULTS SPECIFIC */
+.result-card {
+  padding: 2rem 1.75rem;
+}
+.rc-val {
+  font-family: var(--serif);
+  font-size: 2.2rem; 
+  font-weight: 500;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.rc-label {
+  font-size: 0.9rem; 
+  color: var(--ink3);
+  line-height: 1.6;
+}
+
+/* FINDINGS SPECIFIC */
+.fc-title {
+  font-size: 1.05rem; 
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.fc-body {
+  font-size: 0.95rem; 
+  color: var(--ink2);
+  line-height: 1.65;
+}
+
+/* FUTURE NEXT STEPS SPECIFIC */
+.future-card {
+  border: 1px solid var(--green-mid);
+  border-radius: var(--radius);
+  padding: 2rem;
+  background: var(--green-bg);
+  box-shadow: var(--shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.future-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+.fwc-num {
+  font-family: var(--mono);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--green3);
+  display: block;
+  margin-bottom: 0.85rem;
+  line-height: 1;
+}
+.fwc-title {
+  font-size: 1.05rem; 
+  font-weight: 600;
+  color: var(--green);
+  margin-bottom: 0.6rem;
+}
+.fwc-body {
+  font-size: 0.95rem; 
+  color: var(--ink2);
+  line-height: 1.65;
+}
+
+/* LITERATURE TABLE DASHBOARD STYLE */
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 0;
+  margin-top: 2.5rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem; 
+}
+thead tr { 
+  background: var(--ink); 
+  border-bottom: 2px solid var(--ink2); 
+}
+thead th {
+  padding: 1.1rem 1.5rem;
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  white-space: nowrap;
+}
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+tbody tr:hover { background: var(--off); }
+tbody tr:last-child {
+  border-bottom: none;
+  background: var(--green-bg);
+}
+tbody td {
+  padding: 1.1rem 1.5rem;
+  color: var(--ink2);
+  vertical-align: top;
+  line-height: 1.65;
+}
+tbody td:first-child {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--green2);
+  white-space: nowrap;
+}
+.gap-pill {
+  display: inline-block;
+  background: rgba(181,98,30,0.1);
+  border: 1px solid rgba(181,98,30,0.28);
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+.this-pill {
+  display: inline-block;
+  background: var(--green-bg);
+  border: 1px solid var(--green-mid);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
+
+/* SOLUTION ARCHITECTURE AND CONTRACTS */
+.cc-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--ink4);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+.cc-file {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--green);
+  padding: 0.3rem 0.7rem;
+  background: var(--green-bg);
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.cc-title {
+  font-size: 1.05rem; 
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+}
+.cc-body {
+  font-size: 0.92rem; 
+  color: var(--ink2);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+.cc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.1rem;
+}
+.cc-list li {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink3);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  line-height: 1.5;
+}
+.cc-list li::before {
+  content: '→';
+  color: var(--green3);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.subsection-label {
+  font-family: var(--sans);
+  font-size: 1.1rem; 
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.subsection-desc {
+  font-size: 0.95rem; 
+  color: var(--ink3);
+  margin-bottom: 1.5rem;
+  line-height: 1.65;
+}
+
+/* FORMULA BLOCK */
+.formula-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.formula-row {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--off);
+}
+.formula-row:last-child { border-bottom: none; }
+.f-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--ink4);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.f-eq {
+  font-family: var(--mono);
+  font-size: 0.95rem; 
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.8;
+}
+.f-eq .var-green { color: var(--green2); }
+.f-eq .var-amber { color: var(--amber); }
+.f-note {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink4);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+.formula-block {
+  margin-top: 3.5rem; 
+}
+
+/* IMAGE AND FIGURE STYLING (RESIZED & CENTERED) */
+.fig-block {
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3.5rem; 
+}
+.fig-block + .fig-block { margin-top: 4.5rem; }
+
+.fig-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 1050px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3.5rem; 
+  align-items: start;
+}
+.fig-row-2 + .fig-row-2 { margin-top: 4.5rem; }
+
+.fig-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--white);
+}
+.fig-image:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  border-color: var(--border2);
+}
+
+.fig-caption {
+  text-align: center;
+  font-size: 0.85rem; 
+  color: var(--ink4);
+  margin-top: 1rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+.fig-caption strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink3);
+}
+
+/* CITATION BOX */
+.citation-box {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 2.5rem;
+  background: var(--off);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: var(--shadow);
+  margin-top: 4rem;
+}
+.cite-text {
+  font-size: 0.95rem; 
+  color: var(--ink3);
+  line-height: 1.65;
+}
+.cite-text strong { color: var(--ink2); font-weight: 600; }
+.cite-email {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--green2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--off);
+}
+.ft-l {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--ink4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ft-r {
+  font-size: 0.88rem;
+  color: var(--ink4);
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+
+.hero-left > * {
+  opacity: 0;
+  animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.hero-left > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.25s; }
+.hero-left > *:nth-child(4) { animation-delay: 0.35s; }
+.hero-right > * {
+  opacity: 0;
+  animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.hero-right > *:nth-child(1) { animation-delay: 0.2s; }
+.hero-right > *:nth-child(2) { animation-delay: 0.3s; }
+.hero-right > *:nth-child(3) { animation-delay: 0.4s; }
+.stats-row .stat-item {
+  opacity: 0;
+  animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.stats-row .stat-item:nth-child(1) { animation-delay: 0.5s; }
+.stats-row .stat-item:nth-child(2) { animation-delay: 0.6s; }
+.stats-row .stat-item:nth-child(3) { animation-delay: 0.7s; }
+.stats-row .stat-item:nth-child(4) { animation-delay: 0.8s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1020px) {
+  :root { --section-pad: 4rem 3rem; }
+  .hero-body { grid-template-columns: 1fr; }
+  .hero-left { padding: 5rem 3rem 4rem; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-right { padding: 4rem 3rem; }
+  .barrier-grid, .contracts-row, .findings-grid, .future-grid { grid-template-columns: 1fr 1fr; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stats-row .stat-item:nth-child(2) { border-right: none; }
+  .stats-row .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+  .stats-row .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
+  nav { padding: 0 2rem; }
+  footer { padding: 2rem 3rem; }
+}
+@media (max-width: 700px) {
+  :root { --section-pad: 3.5rem 1.5rem; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { padding: 3rem 1.5rem; }
+  .barrier-grid, .contracts-row, .findings-grid, .future-grid,
+  .fig-row-2 { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .stats-row .stat-item { border-right: none; border-top: 1px solid var(--border); padding: 2rem 1.5rem;}
+  .stats-row .stat-item:first-child { border-top: none; }
+  .nav-links, .nav-meta { display: none; }
+  .citation-box { flex-direction: column; align-items: flex-start; gap: 1.25rem; padding: 1.5rem;}
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">CarbonChain</div>
+  <ul class="nav-links">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#literature">Literature</a></li>
+    <li><a href="#solution">Solution &amp; Workflow</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+  <div class="nav-meta">FAST NUCES · FinTech · 2025</div>
+</nav>
+
+<section id="home" style="padding:0;border:none;">
+  <div class="hero-body">
+    <div class="hero-left">
+      <div class="kicker">
+        <div class="kicker-dot"></div>
+        <span class="kicker-text">Research Paper · Financial Technology</span>
+      </div>
+      <h2>A Blockchain Based<br><em>Fractionalization Framework</em><br>for Enhancing SME Participation in Voluntary
+Carbon Markets</h2>
+      <p class="hero-lead">
+        Small businesses in developing countries produce nearly half of all industrial carbon emissions, yet they cannot participate in the Voluntary Carbon Market. This research builds a protocol that changes that, by splitting carbon credits into affordable kilogram scale units on a public blockchain.
+      </p>
+      <div class="author-block">
+        <div class="author-name">Muhammad Shahnoor Sajid</div>
+        <div class="author-detail">Department of Financial Technology · FAST NUCES, Islamabad, Pakistan</div>
+        <div class="author-email">i235548@isb.nu.edu.pk</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hc-label">Research at a glance</div>
+        <div class="hc-val">21.7%</div>
+        <div class="hc-desc">Reduction in median compliance cost for SMEs, from $15.13 down to $11.48, validated across 10,000 simulated companies in five countries.</div>
+      </div>
+      <div class="hero-card">
+        <div class="hc-label">Transaction cost on Polygon</div>
+        <div class="hc-val">$0.006</div>
+        <div class="hc-desc">Total cost for an SME to buy and retire carbon credits using this protocol, compared to broker fees of 8% to 22% in the legacy market.</div>
+      </div>
+      <div class="tags">
+        <span class="tag">Blockchain</span>
+        <span class="tag">Carbon Trading</span>
+        <span class="tag">Smart Contracts</span>
+        <span class="tag">Tokenization</span>
+        <span class="tag">Emerging Markets</span>
+        <span class="tag">DLT</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num"><span>10,000</span></div>
+      <div class="stat-txt">Synthetic SMEs simulated across five emerging markets using Monte Carlo methods</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>+208</span></div>
+      <div class="stat-txt">Additional SMEs per 10,000 that can now afford carbon compliance for the first time</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>8</span><span>/8</span></div>
+      <div class="stat-txt">Adversarial smart contract tests passed, every attack scenario correctly blocked</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>1,000</span></div>
+      <div class="stat-txt">Kilogram tokens minted per credit, enabling exact amount purchases with no minimum</div>
+    </div>
+  </div>
+</section>
+
+<section id="problem" class="page-section">
+  <div class="section-header">
+    <div class="sec-num">01 Problem Statement</div>
+    <h2>Why SMEs Cannot<br>Enter <em>Carbon Markets</em></h2>
+    <p class="sec-intro">
+      The Voluntary Carbon Market (VCM) is the main financial tool for companies to offset greenhouse gas emissions they cannot yet eliminate. But its rules and infrastructure were designed for large buyers, leaving small businesses completely shut out.
+    </p>
+  </div>
+
+  <div class="explainer reveal">
+    <p>
+      A carbon credit represents one verified tonne of CO₂ removed or reduced. Companies purchase these credits to offset emissions they haven't yet eliminated. Organisations like Verra and the Gold Standard certify the credits; the Integrity Council for the Voluntary Carbon Market (ICVCM) oversees the process to prevent fraud and double counting.
+    </p>
+    <p>
+      The problem is structural. <strong>Small and medium enterprises (SMEs) in countries like Indonesia, Brazil, and Pakistan produce roughly 50% of national industrial emissions</strong>, but they face three concrete barriers that make participation financially impossible. These are not barriers of willingness. Research by Conway (2015) surveying 141 small businesses, found that most wanted to participate but simply had no practical entry point.
+    </p>
+  </div>
+
+  <div class="barrier-grid">
+
+    <div class="card-sharp reveal">
+      <span class="bc-num">Barrier 01</span>
+      <div class="icon-badge">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </span>
+      </div>
+      <div class="bc-title">Minimum One Tonne Purchase</div>
+      <div class="bc-body">Legacy carbon markets will not sell less than one full tonne of CO₂ at a time. But most SMEs emit only a fraction of a tonne annually. They must buy a full tonne, paying for more than they need, or skip compliance entirely.</div>
+      <div class="bc-foot">
+        <span class="bc-stat">1,000 kg</span>
+        <span class="bc-stat-label">smallest available unit in any legacy OTC market</span>
+      </div>
+    </div>
+
+    <div class="card-sharp reveal reveal-d1">
+      <span class="bc-num">Barrier 02</span>
+      <div class="icon-badge">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </span>
+      </div>
+      <div class="bc-title">Broker Fees of 8% to 22%</div>
+      <div class="bc-body">All credits are sold through dealer managed over the counter (OTC) brokers who charge between 8% and 22% of total transaction value as their fee. On top of forced rounding, this makes small purchases completely uneconomical.</div>
+      <div class="bc-foot">
+        <span class="bc-stat">8% to 22%</span>
+        <span class="bc-stat-label">broker fee added on top of the carbon credit price</span>
+      </div>
+    </div>
+
+    <div class="card-sharp reveal reveal-d2">
+      <span class="bc-num">Barrier 03</span>
+      <div class="icon-badge">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </span>
+      </div>
+      <div class="bc-title">$50,000+ Verification Costs</div>
+      <div class="bc-body">Before credits can be issued, registry projects must complete a baseline verification. This costs over $50,000 per project, limiting the supply of affordable, small scale verified credits that SMEs could realistically purchase.</div>
+      <div class="bc-foot">
+        <span class="bc-stat">&gt;$50,000</span>
+        <span class="bc-stat-label">baseline verification cost per project (Sipthorpe et al., 2022)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pull-quote reveal">
+    <p>SMEs account for <strong>roughly 50% of total industrial emissions</strong> in Indonesia, Brazil, and Pakistan, yet they are almost entirely absent from the VCM. As international supply chains increasingly require Scope 3 emission disclosures, this exclusion is becoming a serious economic threat, not just an environmental one.</p>
+  </div>
+</section>
+
+<section id="literature" class="page-section tinted">
+  <div class="section-header">
+    <div class="sec-num">02 Literature Review</div>
+    <h2>What Has Already<br>Been <em>Studied</em></h2>
+    <p class="sec-intro">
+      Three clusters of research document the problem: why SMEs are excluded, what is broken inside the VCM, and whether blockchain can fix it. The conclusion is consistent: the problem is understood, the technology is ready, but no working system exists yet.
+    </p>
+  </div>
+
+  <div class="explainer reveal">
+    <p>
+      Abiodun et al. (2024) confirmed in a systematic review that persistent over-crediting and double counting in the VCM are caused by weak oversight, and that blockchain is the most credible fix available. Merlo et al. (2025) reinforced this, finding that smart contracts are the most practical near term corrective tool for governance gaps.
+    </p>
+    <p>
+      On the technical side, Sipthorpe et al. (2022) assessed 39 organisations and found that splitting credits into smaller units is already technically feasible, with regulatory uncertainty, not technology limits, being the main blocker. The most telling evidence comes from Ballesteros Rodriguez et al. (2024), who analysed real transaction data from KlimaDAO, the most prominent blockchain carbon platform, and found that even there, large institutional buyers completely dominate. <strong>Putting credits on a blockchain is not enough on its own.</strong> Without deliberate fractionalization, the same exclusion patterns simply repeat.
+    </p>
+  </div>
+
+  <div class="table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Ref</th>
+          <th>Study</th>
+          <th>Method</th>
+          <th>Key Finding</th>
+          <th>Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[1]</td>
+          <td><strong>Conway (2015)</strong> Engaging SMEs in Low Carbon Agenda</td>
+          <td>Survey, 141 SMEs</td>
+          <td>SME exclusion is structural; willingness exists but no entry point</td>
+          <td><span class="gap-pill">Pre blockchain</span></td>
+        </tr>
+        <tr>
+          <td>[2]</td>
+          <td><strong>Abiodun et al. (2024)</strong> Blockchain in Carbon Trading</td>
+          <td>Systematic review</td>
+          <td>Over-crediting and double counting confirmed; blockchain is the fix</td>
+          <td><span class="gap-pill">No SME fractionalization</span></td>
+        </tr>
+        <tr>
+          <td>[3]</td>
+          <td><strong>Sipthorpe et al. (2022)</strong> Blockchain for Carbon Markets</td>
+          <td>TRL assessment, 39 orgs</td>
+          <td>Credit splitting is feasible; regulatory uncertainty is the blocker</td>
+          <td><span class="gap-pill">No system built</span></td>
+        </tr>
+        <tr>
+          <td>[4]</td>
+          <td><strong>Preziuso (2026)</strong> Tokenisation Opportunities in VCMs</td>
+          <td>1,495 project analysis</td>
+          <td>STOM framework maps project types to tokenisation strategies</td>
+          <td><span class="gap-pill">Diagnostic only</span></td>
+        </tr>
+        <tr>
+          <td>[5]</td>
+          <td><strong>Ballesteros Rodriguez et al. (2024)</strong> KlimaDAO</td>
+          <td>On chain data analysis</td>
+          <td>Even blockchain platforms replicate large buyer dominance</td>
+          <td><span class="gap-pill">No solution proposed</span></td>
+        </tr>
+        <tr>
+          <td>[6]</td>
+          <td><strong>Merlo et al. (2025)</strong> Blockchain for the Carbon Market</td>
+          <td>Literature review</td>
+          <td>Governance gaps are structural; smart contracts are corrective layer</td>
+          <td><span class="gap-pill">No framework built</span></td>
+        </tr>
+        <tr>
+          <td>[7]</td>
+          <td><strong>Bassi et al. (2025)</strong> Blockchain Based VCM Network</td>
+          <td>Social network analysis</td>
+          <td>SMEs always peripheral; technical design determines inclusion</td>
+          <td><span class="gap-pill">Problem only described</span></td>
+        </tr>
+        <tr>
+          <td>[8]</td>
+          <td><strong>Allahgholi (2026)</strong> Tokenization &amp; Financial Inclusion</td>
+          <td>Conceptual analysis</td>
+          <td>Tokenisation can remove volume barriers for SMEs in the Global South</td>
+          <td><span class="gap-pill">Theory only</span></td>
+        </tr>
+        <tr>
+          <td>★</td>
+          <td><strong>This Study Sajid (2025)</strong><span class="this-pill">New</span></td>
+          <td>Monte Carlo + Solidity prototype</td>
+          <td>First working fractionalization protocol built for developing economy SMEs</td>
+          <td>Synthetic data; testnet only</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pull-quote reveal">
+    <p>"The problem is well documented and blockchain is widely agreed to be a promising solution, but no one has actually built a working system that small businesses in developing countries can realistically use. <strong>That is precisely what this research addresses.</strong>"</p>
+  </div>
+</section>
+
+<section id="solution" class="page-section">
+  <div class="section-header">
+    <div class="sec-num">03 Proposed Solution</div>
+    <h2>The <em>Fractionalization</em><br>Protocol &amp; Workflow</h2>
+    <p class="sec-intro">
+      The core idea is simple: take a verified one tonne carbon credit, wrap it as a digital asset, and split it into 1,000 individual kilogram tokens that any SME can buy in the exact quantity they need, no broker, no minimum.
+    </p>
+  </div>
+
+  <div class="explainer reveal">
+    <p>
+      The protocol runs on Polygon, a Layer 2 blockchain built on Ethereum that keeps transaction fees extremely low (around $0.006 total per SME workflow). It uses two types of digital tokens: an ERC 721 NFT representing the original one tonne credit, and ERC 20 fungible tokens representing individual kilograms of CO₂.
+    </p>
+    <p>
+      <strong>System Architecture:</strong> A verified one tonne credit from Verra or the Gold Standard is wrapped as an ERC 721 NFT and deposited into a Vault smart contract. The Vault locks the NFT and mints exactly 1,000 ERC 20 tokens, one per kilogram of CO₂. 
+    </p>
+    <p>
+      <strong>Execution Workflow:</strong> An SME purchases exactly the number of tokens matching their emissions, say, 680 tokens for 680 kg of annual CO₂. When ready to claim compliance, they call <code style="font-family:var(--mono);font-size:0.88em;background:var(--off2);padding:0.1em 0.4em;border-radius:3px;color:var(--ink);">retireCarbon(680)</code>. The contract checks their balance, burns those tokens permanently, and emits a timestamped on chain event containing the caller's address, the amount retired, the block number, and an optional ESG reference. This event acts as the immutable compliance certificate.
+    </p>
+  </div>
+
+  <div class="fig-block reveal">
+    <img src="System_Architecture_Diagram.png" alt="System Architecture Diagram" class="fig-image" loading="lazy">
+    <p class="fig-caption"><strong>Figure 1.</strong> Proposed system architecture for carbon credit fractionalization on Polygon Layer 2. The Oracle Network and AMM layer are Phase 2 extensions not implemented in this prototype.</p>
+  </div>
+
+  <div class="fig-block reveal">
+    <img src="System_workflow.png" alt="System Workflow Diagram" class="fig-image" loading="lazy">
+    <p class="fig-caption"><strong>Figure 2.</strong> Proposed system workflow, from registry credit retirement to on chain compliance verification.</p>
+  </div>
+
+  <div class="formula-block reveal">
+    <div class="subsection-label">How the cost saving works</div>
+    <div class="subsection-desc">In the legacy system, an SME is forced to round up to the nearest full tonne even if they only need a fraction. The proposed protocol charges only for what they actually need.</div>
+    <div class="formula-wrap">
+      <div class="formula-row">
+        <div class="f-label">Legacy OTC, forced one tonne rounding</div>
+        <div class="f-eq">C<sub>conv</sub>(E) = ⌈E / 1000⌉ × P<sub>tonne</sub> × (1 + <span class="var-amber">F<sub>broker</sub></span>)</div>
+        <div class="f-note">F<sub>broker</sub> ∈ [8%, 22%] forces purchase of full tonne even for fractional emissions</div>
+      </div>
+      <div class="formula-row">
+        <div class="f-label">Proposed protocol, exact kilogram pricing</div>
+        <div class="f-eq">C<sub>frac</sub>(E) = (E × P<sub>kg</sub>) + <span class="var-green">G<sub>tx</sub></span></div>
+        <div class="f-note">G<sub>tx</sub> ≈ $0.006 on Polygon, 1% protocol fee replaces 8% to 22% broker fee</div>
+      </div>
+      <div class="formula-row">
+        <div class="f-label">Savings per SME and across all 10,000</div>
+        <div class="f-eq">ΔW<sub>i</sub> = C<sub>conv</sub>(E) − C<sub>frac</sub>(E) &nbsp;·&nbsp; W<sub>total</sub> = Σ ΔW<sub>i</sub></div>
+        <div class="f-note">Median ΔW = $3.65 per SME, 21.7% cost reduction across all five markets</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contracts-row">
+    <div class="card-sharp reveal">
+      <div class="cc-num">Contract 01 · ERC 721</div>
+      <div class="cc-file">CarbonCreditNFT_v2.sol</div>
+      <div class="cc-title">Parent Credit Token</div>
+      <div class="cc-body">Represents one verified tonne of CO₂. Stores the registry retirement hash for each minted token. Prevents the same registry hash from being used twice via an anti replay mapping.</div>
+      <ul class="cc-list">
+        <li>Anti replay registry hash verification</li>
+        <li>issueCredit(bytes32 hash)</li>
+        <li>One NFT = one verified 1 tCO₂e credit</li>
+      </ul>
+    </div>
+    <div class="card-sharp reveal reveal-d1">
+      <div class="cc-num">Contract 02 · Bridge</div>
+      <div class="cc-file">CarbonVault_v2.sol</div>
+      <div class="cc-title">Fractionalization Bridge</div>
+      <div class="cc-body">Accepts the parent NFT, locks it so it cannot be moved or double spent, then mints exactly 1,000 ERC 20 kilogram tokens to the depositor. Protected against reentrancy attacks.</div>
+      <ul class="cc-list">
+        <li>ReentrancyGuard protection</li>
+        <li>fractionalizeCredit(NFTid, value)</li>
+        <li>Governance vault rotation via multisig</li>
+      </ul>
+    </div>
+    <div class="card-sharp reveal reveal-d2">
+      <div class="cc-num">Contract 03 · ERC 20</div>
+      <div class="cc-file">CarbonMicroToken_v2.sol</div>
+      <div class="cc-title">Kilogram Token (CKG)</div>
+      <div class="cc-body">The token an SME actually buys. Each CKG token equals exactly one kilogram of CO₂e. Burning tokens permanently removes them from supply and emits an immutable compliance record.</div>
+      <ul class="cc-list">
+        <li>Role based access control</li>
+        <li>retireCarbon(uint256 kg)</li>
+        <li>Immutable CARBONRETIRED event</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="results" class="page-section">
+  <div class="section-header">
+    <div class="sec-num">04 Experiments &amp; Results</div>
+    <h2>What the<br><em>Data Shows</em></h2>
+    <p class="sec-intro">
+      The protocol was validated two ways: a Monte Carlo simulation of 10,000 synthetic SMEs to measure the economic benefit, and a Solidity smart contract prototype tested against eight adversarial attack scenarios.
+    </p>
+  </div>
+
+  <div class="explainer reveal">
+    <p>
+      <strong>The simulation dataset</strong> was built from scratch using Python, calibrated against real published sources. 10,000 SME records were generated across five countries: Indonesia (1,096), Brazil (4,801), Pakistan (444), Nigeria (1,561), and Bangladesh (2,098), with country weights matching ILO 2022 SME population estimates. Each SME was assigned annual emissions drawn from a log normal distribution, a carbon price modelled using Geometric Brownian Motion calibrated from Ecosystem Marketplace 2019 to 2023 data, and a compliance budget with a median of $75 based on World Bank 2022 enterprise survey data.
+    </p>
+    <p>
+      An SME was classified as <strong>financially eligible</strong> if their compliance cost under each system was less than or equal to their sampled budget. Results were compared between the legacy system and the proposed protocol across all five countries and 16 combinations of broker fee and budget threshold.
+    </p>
+  </div>
+
+  <div class="results-grid">
+    <div class="card-sharp result-card reveal">
+      <div class="rc-val">95.5%</div>
+      <div class="rc-label">Financial eligibility under the proposed protocol, up from 93.4% in the legacy market</div>
+    </div>
+    <div class="card-sharp result-card reveal reveal-d1">
+      <div class="rc-val">+2.08pp</div>
+      <div class="rc-label">Participation uplift across all five markets, 208 more SMEs per 10,000 can now comply</div>
+    </div>
+    <div class="card-sharp result-card reveal reveal-d2">
+      <div class="rc-val">$11.48</div>
+      <div class="rc-label">Median compliance cost under the protocol, down from $15.13, a 21.7% reduction</div>
+    </div>
+    <div class="card-sharp result-card reveal reveal-d3">
+      <div class="rc-val">FP = 0</div>
+      <div class="rc-label">Zero false positives, the protocol never admits an SME that genuinely cannot afford compliance</div>
+    </div>
+  </div>
+
+  <div class="fig-block reveal">
+    <img src="Figure_1.png" alt="Financial Eligibility Rate by Country" class="fig-image" loading="lazy">
+    <p class="fig-caption"><strong>Figure 3.</strong> Financial eligibility rate per country: Legacy OTC market vs Proposed Fractionalization Protocol (N = 10,000 SMEs). Nigeria shows the largest uplift (2.88pp) due to the highest median emission value.</p>
+  </div>
+
+  <div class="fig-row-2" style="grid-template-columns: 2fr 3fr; max-width: 1200px;">
+    <div class="reveal">
+      <img src="Figure_2.png" alt="Compliance Classification Confusion Matrix" class="fig-image" loading="lazy">
+      <p class="fig-caption"><strong>Figure 4.</strong> Compliance classification confusion matrix at $75 budget threshold (N = 10,000). FP = 0 confirms the protocol never incorrectly admits an unaffordable SME.</p>
+    </div>
+    <div class="reveal reveal-d1">
+      <img src="Figure_4.png" alt="Median Compliance Cost by Country" class="fig-image" loading="lazy">
+      <p class="fig-caption"><strong>Figure 5.</strong> Median compliance cost per SME across three legacy OTC benchmarks vs the proposed protocol, by country. The largest saving is in Nigeria ($18.8 → $13.7).</p>
+    </div>
+  </div>
+
+  <div class="fig-row-2">
+    <div class="reveal">
+      <img src="Figure_3.png" alt="Sensitivity Analysis Participation Uplift" class="fig-image" loading="lazy">
+      <p class="fig-caption"><strong>Figure 6.</strong> Sensitivity of participation uplift (pp) to broker fee rate and compliance budget threshold. All 16 cells are positive, the result holds under every tested scenario.</p>
+    </div>
+    <div class="reveal reveal-d1">
+      <img src="Figure_5.png" alt="Smart Contract Gas Cost" class="fig-image" loading="lazy">
+      <p class="fig-caption"><strong>Figure 7.</strong> Smart contract execution cost on the Polygon Mumbai testnet. The <code style="font-family:var(--mono);font-size:0.84em;">fractionalizeCredit</code> function is the most expensive at 111,399 gas units.</p>
+    </div>
+  </div>
+
+  <div class="explainer reveal" style="margin-top:2.5rem;margin-bottom:1.5rem;">
+    <p>
+      The table below shows the full country level results. Every country shows a positive uplift and a consistent 21.5% to 21.8% cost saving, confirming the protocol's benefit is not specific to one market or one set of assumptions.
+    </p>
+  </div>
+
+  <div class="data-table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>N</th>
+          <th>Legacy (%)</th>
+          <th>Proposed (%)</th>
+          <th>Uplift (pp)</th>
+          <th>False Neg.</th>
+          <th>Med. Legacy ($)</th>
+          <th>Med. Proposed ($)</th>
+          <th>Med. Saving (%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Indonesia</td><td>1,096</td><td>92.5</td><td>95.0</td>
+          <td style="color:var(--green2);font-weight:600;">+2.46</td>
+          <td>27</td><td>$14.70</td><td>$11.34</td>
+          <td style="color:var(--green2);font-weight:600;">21.5%</td>
+        </tr>
+        <tr>
+          <td>Brazil</td><td>4,801</td><td>93.5</td><td>95.7</td>
+          <td style="color:var(--green2);font-weight:600;">+2.17</td>
+          <td>104</td><td>$15.48</td><td>$11.67</td>
+          <td style="color:var(--green2);font-weight:600;">21.8%</td>
+        </tr>
+        <tr>
+          <td>Pakistan</td><td>444</td><td>96.2</td><td>97.7</td>
+          <td style="color:var(--green2);font-weight:600;">+1.58</td>
+          <td>7</td><td>$13.61</td><td>$9.97</td>
+          <td style="color:var(--green2);font-weight:600;">21.5%</td>
+        </tr>
+        <tr>
+          <td>Nigeria</td><td>1,561</td><td>91.4</td><td>94.2</td>
+          <td style="color:var(--green2);font-weight:600;">+2.88</td>
+          <td>45</td><td>$17.72</td><td>$13.72</td>
+          <td style="color:var(--green2);font-weight:600;">21.6%</td>
+        </tr>
+        <tr>
+          <td>Bangladesh</td><td>2,098</td><td>94.6</td><td>95.8</td>
+          <td style="color:var(--green2);font-weight:600;">+1.19</td>
+          <td>25</td><td>$13.04</td><td>$9.69</td>
+          <td style="color:var(--green2);font-weight:600;">21.8%</td>
+        </tr>
+        <tr style="font-weight:600;background:var(--green-bg);">
+          <td>All markets</td><td>10,000</td><td>93.4%</td><td>95.5%</td>
+          <td style="color:var(--green);">+2.08</td>
+          <td>208</td><td>$15.13</td><td>$11.48</td>
+          <td style="color:var(--green);">21.7%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="explainer reveal" style="margin-top:3rem;margin-bottom:1.5rem;">
+    <p>
+      All eight adversarial test cases passed, giving the prototype 100% functional accuracy. The tests covered non owner fractionalization, double lock prevention, retirement beyond balance, hash replay attacks, zero value hash submission, a happy path end to end workflow, governance vault rotation, and unauthorised access control. The gas break even point is approximately 19,754 gwei, about 330 times higher than the normal operating baseline of 60 gwei.
+    </p>
+  </div>
+
+  <div class="data-table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Test Scenario</th>
+          <th>Expected Behaviour</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>01</td><td>Non owner attempts to fractionalize</td><td>Transaction reverted</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>02</td><td>Double lock same NFT in Vault</td><td>VaultAlreadyLocked error</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>03</td><td>Retire more tokens than balance holds</td><td>InsufficientFractional error</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>04</td><td>Registry hash replay attack</td><td>AlreadyRetired error</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>05</td><td>Zero value hash submission</td><td>InvalidRetirementHash error</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>06</td><td>Happy path end to end workflow</td><td>All assertions pass, events emitted</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>07</td><td>Governance vault rotation</td><td>MINTER_ROLE transferred correctly</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr><td>08</td><td>Attacker calls updateVault</td><td>AccessControl revert</td><td style="color:var(--green2);font-family:var(--mono);font-size:0.8rem;font-weight:600;">PASS</td></tr>
+        <tr style="background:var(--green-bg);">
+          <td colspan="3" style="font-weight:600;color:var(--ink);">Overall prototype functional accuracy</td>
+          <td style="color:var(--green);font-family:var(--mono);font-size:0.85rem;font-weight:600;">8 / 8 (100%)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pull-quote reveal">
+    <p>
+      <strong>An honest caveat.</strong> The protocol's financial eligibility rate reaches 95.5%, but when real world adoption barriers are applied (crypto wallet ownership at 1.85% of SMEs, DeFi platform readiness at 35% of wallet holders, and regulatory acceptance at 30%), the adoption adjusted rate falls to just <strong>0.22%</strong>. The protocol removes the financial barrier entirely. The binding constraint for real deployment is adoption infrastructure and regulatory recognition, not cost.
+    </p>
+  </div>
+</section>
+
+<section id="conclusion" class="page-section tinted">
+  <div class="section-header">
+    <div class="sec-num">05 Conclusion</div>
+    <h2>What Was<br><em>Achieved</em></h2>
+    <p class="sec-intro">
+      This research built and validated the first purpose designed fractionalization protocol for SME access to voluntary carbon markets. The financial barrier is largely solved. The work left to do is about infrastructure and regulation.
+    </p>
+  </div>
+
+  <div class="findings-grid">
+
+    <div class="card-sharp reveal">
+      <div class="icon-badge">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="7" width="6" height="14" rx="1"/>
+            <rect x="9" y="3" width="6" height="18" rx="1"/>
+            <rect x="16" y="10" width="6" height="11" rx="1"/>
+          </svg>
+        </span>
+      </div>
+      <div class="fc-title">Technical validation confirmed</div>
+      <div class="fc-body">Three Solidity contracts deployed on Polygon Mumbai testnet. All 8 adversarial tests passed: double retirement, hash replay, reentrancy, and unauthorised access attacks correctly blocked. Total SME workflow: $0.006. Gas break even is 330× normal operating conditions.</div>
+    </div>
+
+    <div class="card-sharp reveal reveal-d1">
+      <div class="icon-badge">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </span>
+      </div>
+      <div class="fc-title">Economic benefit demonstrated</div>
+      <div class="fc-body">Monte Carlo simulation of 10,000 SMEs across five emerging markets shows a 2.08 percentage point eligibility uplift and 21.7% median cost reduction. The result holds across all 16 tested combinations of broker fee and budget threshold.</div>
+    </div>
+
+    <div class="card-sharp reveal reveal-d2">
+      <div class="icon-badge">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </span>
+      </div>
+      <div class="fc-title">The real barrier is infrastructure</div>
+      <div class="fc-body">The protocol eliminates the cost barrier. But the 0.22% adoption adjusted rate makes clear that wallet penetration, DeFi readiness, and ICVCM regulatory recognition are the binding constraints for real world deployment, not the technology or the cost.</div>
+    </div>
+
+  </div>
+
+  <div class="subsection-label reveal" style="margin-top: 3.5rem;">Recommended next steps</div>
+  <div class="future-grid" style="margin-top:1.5rem;">
+    <div class="future-card reveal">
+      <span class="fwc-num">01</span>
+      <div class="fwc-title">Live Oracle Bridge to Verra</div>
+      <div class="fwc-body">The current prototype requires the registry hash to be entered manually. A production deployment needs a secure, automated oracle bridge between the Verra registry API and the on chain <code style="font-family:var(--mono);font-size:0.84em;">issueCredit</code> function to close this trust gap.</div>
+    </div>
+    <div class="future-card reveal reveal-d1">
+      <span class="fwc-num">02</span>
+      <div class="fwc-title">Real World Pilot Study</div>
+      <div class="fwc-body">A field study with actual SMEs in one of the five modelled countries: Indonesia, Brazil, Pakistan, Nigeria, or Bangladesh, would test whether the financial eligibility gains measured in simulation translate into real on chain adoption behaviour.</div>
+    </div>
+    <div class="future-card reveal reveal-d2">
+      <span class="fwc-num">03</span>
+      <div class="fwc-title">Scope 3 Supply Chain Extension</div>
+      <div class="fwc-body">Extending the fractionalization model to cover Scope 3 supply chain emissions would significantly broaden the potential user base and align with international ESG disclosure mandates that are already being enforced by major buyers.</div>
+    </div>
+  </div>
+
+  <div class="citation-box reveal">
+    <div class="cite-text">
+      <strong>Muhammad Shahnoor Sajid</strong> (2025). A Blockchain Based Fractionalization Framework for Enhancing SME Participation in Voluntary Carbon Markets.<br>
+      <em>Department of Financial Technology, National University of Computer and Emerging Sciences (FAST NUCES), Islamabad, Pakistan.</em>
+    </div>
+    <div class="cite-email">i235548@isb.nu.edu.pk</div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-l">CarbonChain Protocol · FAST NUCES · 2025</div>
+  <div class="ft-r">Muhammad Shahnoor Sajid · Department of Financial Technology</div>
+</footer>
+
+<script>
+/* scroll reveal */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* active nav highlight */
+const secs = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+const navObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+  });
+}, { threshold: 0.2, rootMargin: '-64px 0px 0px 0px' });
+secs.forEach(s => navObs.observe(s));
+</script>
+</body>
+</html>
